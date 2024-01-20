@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model InseData {
+  id                 String   @id @default(uuid())
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  nu_ano_saeb        Int
+  co_uf              Int
+  sg_uf              String
+  no_uf              String
+  co_municipio       String
+  no_municipio       String
+  id_escola          String
+  no_escola          String
+  tp_tipo_rede       Int
+  tp_localizacao     Int
+  tp_capital         Int
+  qtd_alunos_inse    Int
+  media_inse         Float
+  inse_classificacao String
+  pc_nivel_1         Float
+  pc_nivel_2         Float
+  pc_nivel_3         Float
+  pc_nivel_4         Float
+  pc_nivel_5         Float
+  pc_nivel_6         Float
+  pc_nivel_7         Float
+  pc_nivel_8         Float
+
+  @@map("inse_data")
+}

@@ -1,0 +1,30 @@
+-- CreateTable
+CREATE TABLE `inse_data` (
+    `id` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+    `nu_ano_saeb` INTEGER NOT NULL,
+    `co_uf` INTEGER NOT NULL,
+    `sg_uf` VARCHAR(191) NOT NULL,
+    `no_uf` VARCHAR(191) NOT NULL,
+    `co_municipio` VARCHAR(191) NOT NULL,
+    `no_municipio` VARCHAR(191) NOT NULL,
+    `id_escola` VARCHAR(191) NOT NULL,
+    `no_escola` VARCHAR(191) NOT NULL,
+    `tp_tipo_rede` INTEGER NOT NULL,
+    `tp_localizacao` INTEGER NOT NULL,
+    `tp_capital` INTEGER NOT NULL,
+    `qtd_alunos_inse` INTEGER NOT NULL,
+    `media_inse` DOUBLE NOT NULL,
+    `inse_classificacao` VARCHAR(191) NOT NULL,
+    `pc_nivel_1` DOUBLE NOT NULL,
+    `pc_nivel_2` DOUBLE NOT NULL,
+    `pc_nivel_3` DOUBLE NOT NULL,
+    `pc_nivel_4` DOUBLE NOT NULL,
+    `pc_nivel_5` DOUBLE NOT NULL,
+    `pc_nivel_6` DOUBLE NOT NULL,
+    `pc_nivel_7` DOUBLE NOT NULL,
+    `pc_nivel_8` DOUBLE NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
