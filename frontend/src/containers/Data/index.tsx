@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Flex, Loader, useMantineTheme } from "@mantine/core";
+import { Flex, Loader, Stack, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import { DrawColumns } from "@pages/Dashboard/DrawColumns";
 import { Table } from "@components/Table";
+import { Filter } from "@components/Filter";
 import { ItemContext } from "@contexts/Item";
 import { InseDataItem } from "@utils/data";
 
@@ -42,10 +43,14 @@ export default function DataContainer() {
 
   return (
     <>
-      {isLoading ? (
-        <Loader color="blue" />
-      ) : (
-        <Flex className="w-full">
+      <Stack className="w-full gap-8">
+        <Filter />
+
+        {isLoading ? (
+          <Flex className="w-full justify-center">
+            <Loader color="blue" />
+          </Flex>
+        ) : (
           <Table
             tablePage={currentTablePage}
             tableRenderedData={tableRenderedData}
@@ -58,8 +63,8 @@ export default function DataContainer() {
             handlePageChange={handlePageChange}
             isFetchingPage={isFetchingPage}
           />
-        </Flex>
-      )}
+        )}
+      </Stack>
 
       {opened && (
         <ItemModal

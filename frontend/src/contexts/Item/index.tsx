@@ -11,6 +11,7 @@ interface ItemProps {
   setTableRenderedData: (values: SetStateAction<InseDataItem[]>) => void;
   handleLoadData: () => Promise<void>;
   handleSearchData: (search: string) => Promise<void>;
+  handleFilterData: (query: string) => Promise<void>;
   handlePageChange: (page: number) => Promise<void>;
 }
 

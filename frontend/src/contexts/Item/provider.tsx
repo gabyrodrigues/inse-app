@@ -57,6 +57,18 @@ export default function ItemContextProvider(props: ItemContextProviderProps) {
     }
   }
 
+  async function handleFilterData(query: string) {
+    try {
+      setLoading(true);
+      const response = await api.get(`/inse/filter${query}`);
+      setTableRenderedData(response.data.result);
+      setTotalRecords(response.data.total);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const values = {
     isLoading,
     currentTablePage,
@@ -67,7 +79,8 @@ export default function ItemContextProvider(props: ItemContextProviderProps) {
     setTableRenderedData,
     handleLoadData,
     handlePageChange,
-    handleSearchData
+    handleSearchData,
+    handleFilterData
   };
 
   return <ItemContext.Provider value={values}>{props.children}</ItemContext.Provider>;

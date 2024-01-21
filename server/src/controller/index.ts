@@ -91,7 +91,6 @@ const excelData = async function (req: Request, res: Response) {
     }
 
     fs.unlinkSync(excel.tempFilePath);
-    console.log("Data inserted successfully!");
     res.status(200).json({ message: "Data inserted successfully!" });
   } catch (err) {
     console.error("Error inserting data:", err);
@@ -192,13 +191,14 @@ const searchData = async function (req: Request, res: Response) {
 interface FilterWhereParams {
   sg_uf?: string;
   qtd_alunos_inse?: number | { lte: number };
+  media_inse?: number | { lte: number };
   inse_classificacao?: string;
   tp_tipo_rede?: { in: number[] };
   order?: string;
 }
 
 const filterData = async function (req: Request, res: Response) {
-  const { sg_uf, qtd_alunos_inse, inse_classificacao, tp_tipo_rede, order } = req.query;
+  const { sg_uf, qtd_alunos_inse, media_inse, inse_classificacao, tp_tipo_rede, order } = req.query;
 
   const page = req.query.page ? +req.query.page : 1;
   const pageSize = 100;
@@ -216,6 +216,10 @@ const filterData = async function (req: Request, res: Response) {
     where.qtd_alunos_inse = { lte: +qtd_alunos_inse };
   }
 
+  if (media_inse) {
+    where.media_inse = { lte: Number(media_inse) };
+  }
+
   if (tp_tipo_rede) {
     where.tp_tipo_rede = {
       in: String(tp_tipo_rede)
@@ -231,7 +235,7 @@ const filterData = async function (req: Request, res: Response) {
   try {
     const [data, total] = await prismaClient.$transaction([
       prismaClient.inseData.findMany({
-        // where,
+        where,
         skip,
         take,
         orderBy: {

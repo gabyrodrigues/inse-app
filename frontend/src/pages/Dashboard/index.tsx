@@ -8,7 +8,7 @@ export default function Dashboard() {
     <>
       <Menu />
 
-      <Container className="max-w-screen-xl py-16 text-center">
+      <Container className="max-w-screen-xl py-12 text-center">
         <DataContainer />
       </Container>
     </>
