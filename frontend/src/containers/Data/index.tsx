@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Flex, Loader, useMantineTheme } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 import { DrawColumns } from "@pages/Dashboard/DrawColumns";
 import { Table } from "@components/Table";
 import { InseDataItem } from "@utils/data";
 import { api } from "@services/api";
+import { ItemModal } from "./ItemModal";
 
 export default function DataContainer() {
   const [currentTablePage, setCurrentTablePage] = useState(1);
@@ -13,10 +15,14 @@ export default function DataContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingPage, setIsFetchingPage] = useState(false);
 
+  const [opened, { open, close }] = useDisclosure(false);
+  const [activeItem, setActiveItem] = useState<InseDataItem | null>(null);
+
   const theme = useMantineTheme();
 
-  function handleRowClick(values: InseDataItem) {
-    console.log("click", values);
+  function handleRowClick(item: InseDataItem) {
+    open();
+    setActiveItem(item);
   }
 
   async function handleLoadData() {
@@ -47,6 +53,11 @@ export default function DataContainer() {
     }
   }
 
+  function handleCloseModal() {
+    close();
+    setActiveItem(null);
+  }
+
   useEffect(() => {
     handleLoadData();
   }, []);
@@ -54,7 +65,7 @@ export default function DataContainer() {
   return (
     <>
       {isLoading ? (
-        <Loader color="pink" />
+        <Loader color="blue" />
       ) : (
         <Flex className="w-full">
           <Table
@@ -70,6 +81,14 @@ export default function DataContainer() {
             isFetchingPage={isFetchingPage}
           />
         </Flex>
+      )}
+
+      {opened && (
+        <ItemModal
+          data={activeItem as InseDataItem}
+          opened={opened}
+          onClose={handleCloseModal}
+        />
       )}
     </>
   );

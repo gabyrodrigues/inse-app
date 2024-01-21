@@ -11,7 +11,7 @@ interface TableProps<T> {
   setTableRenderedData: (values: T[]) => void;
   openTableDeleteModal?: () => void;
   closeTableDeleteModal?: () => void;
-  handleRowClick: (values: T) => void;
+  handleRowClick: (item: T) => void;
   handlePageChange: (page: number) => void;
 }
 
