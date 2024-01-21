@@ -3,11 +3,13 @@ import { InseDataItem } from "@utils/data";
 
 interface ItemProps {
   isLoading: boolean;
+  searchTerm: string;
   currentTablePage: number;
   tableRenderedData: InseDataItem[];
   totalRecords: number;
   isFetchingPage: boolean;
   setLoading: (value: SetStateAction<boolean>) => void;
+  setSearchTerm: (value: SetStateAction<string>) => void;
   setTableRenderedData: (values: SetStateAction<InseDataItem[]>) => void;
   handleLoadData: () => Promise<void>;
   handleSearchData: (search: string) => Promise<void>;

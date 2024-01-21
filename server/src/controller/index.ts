@@ -85,9 +85,9 @@ const searchData = async function (req: Request, res: Response) {
       prismaClient.inseData.findMany({
         where: {
           OR: [
-            { no_escola: { contains: String(search) } },
-            { no_municipio: { contains: String(search) } },
-            { no_uf: { contains: String(search) } }
+            { no_escola: { contains: String(search), mode: "insensitive" } },
+            { no_municipio: { contains: String(search), mode: "insensitive" } },
+            { no_uf: { contains: String(search), mode: "insensitive" } }
           ]
         },
         skip,
@@ -96,9 +96,9 @@ const searchData = async function (req: Request, res: Response) {
       prismaClient.inseData.count({
         where: {
           OR: [
-            { no_escola: { contains: String(search) } },
-            { no_municipio: { contains: String(search) } },
-            { no_uf: { contains: String(search) } }
+            { no_escola: { contains: String(search), mode: "insensitive" } },
+            { no_municipio: { contains: String(search), mode: "insensitive" } },
+            { no_uf: { contains: String(search), mode: "insensitive" } }
           ]
         }
       })
@@ -124,10 +124,16 @@ interface FilterWhereParams {
   inse_classificacao?: string;
   tp_tipo_rede?: { in: number[] };
   order?: string;
+  OR?: Array<
+    | { no_municipio?: { contains: string; mode: "insensitive" } }
+    | { no_escola?: { contains: string; mode: "insensitive" } }
+    | { no_uf?: { contains: string; mode: "insensitive" } }
+  >;
 }
 
 const filterData = async function (req: Request, res: Response) {
-  const { sg_uf, qtd_alunos_inse, media_inse, inse_classificacao, tp_tipo_rede, order } = req.query;
+  const { sg_uf, qtd_alunos_inse, search, media_inse, inse_classificacao, tp_tipo_rede, order } =
+    req.query;
 
   const page = req.query.page ? +req.query.page : 1;
   const pageSize = 100;
@@ -155,6 +161,14 @@ const filterData = async function (req: Request, res: Response) {
         .split(",")
         .map((value: string) => +value.trim())
     };
+  }
+
+  if (search) {
+    where.OR = [
+      { no_escola: { contains: String(search), mode: "insensitive" } },
+      { no_municipio: { contains: String(search), mode: "insensitive" } },
+      { no_uf: { contains: String(search), mode: "insensitive" } }
+    ];
   }
 
   if (inse_classificacao) {

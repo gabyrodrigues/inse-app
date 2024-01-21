@@ -17,23 +17,7 @@ export function Filter() {
   const [classInse, setClassInse] = useState("");
   const [mediaInse, setMediaInse] = useState(10);
 
-  const { handleFilterData } = useContext(ItemContext);
-
-  function handleChangeOrderBy(value: string | null) {
-    setOrder(String(value));
-  }
-
-  function handleChangeUf(value: string | null) {
-    setUf(String(value));
-  }
-
-  function handleChangeClassInse(value: string | null) {
-    setClassInse(String(value));
-  }
-
-  function handleChangeMediaInse(value: number) {
-    setMediaInse(value);
-  }
+  const { handleFilterData, searchTerm } = useContext(ItemContext);
 
   async function handleFilterParams() {
     const queryParams = formatQueryParams({ order, uf, classInse, mediaInse });
@@ -59,6 +43,10 @@ export function Filter() {
       searchParams.set("media_inse", String(params.mediaInse));
     }
 
+    if (searchTerm) {
+      searchParams.set("search", searchTerm);
+    }
+
     return `?${searchParams.toString()}`;
   }
 
@@ -73,7 +61,7 @@ export function Filter() {
           { value: "desc", label: "Decrescente" }
         ]}
         value={order}
-        onChange={handleChangeOrderBy}
+        onChange={(value) => setOrder(String(value))}
       />
 
       <Select
@@ -83,7 +71,7 @@ export function Filter() {
         checkIconPosition="left"
         data={UFs}
         value={uf}
-        onChange={handleChangeUf}
+        onChange={(value) => setUf(String(value))}
       />
 
       <Select
@@ -100,7 +88,7 @@ export function Filter() {
           { value: "Nível VI", label: "Nível VI" }
         ]}
         value={classInse}
-        onChange={handleChangeClassInse}
+        onChange={(value) => setClassInse(String(value))}
       />
 
       <Stack className="gap-2 justify-start text-left min-w-[200px]">
@@ -112,7 +100,7 @@ export function Filter() {
           step={0.1}
           styles={{ markLabel: { display: "none" } }}
           value={mediaInse}
-          onChange={handleChangeMediaInse}
+          onChange={(value) => setMediaInse(value)}
         />
       </Stack>
 

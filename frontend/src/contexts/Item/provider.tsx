@@ -10,6 +10,7 @@ interface ItemContextProviderProps {
 
 export default function ItemContextProvider(props: ItemContextProviderProps) {
   const [isLoading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentTablePage, setCurrentTablePage] = useState(1);
   const [tableRenderedData, setTableRenderedData] = useState<InseDataItem[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
@@ -70,11 +71,13 @@ export default function ItemContextProvider(props: ItemContextProviderProps) {
 
   const values = {
     isLoading,
+    searchTerm,
     currentTablePage,
     tableRenderedData,
     totalRecords,
     isFetchingPage,
     setLoading,
+    setSearchTerm,
     setTableRenderedData,
     handleLoadData,
     handlePageChange,

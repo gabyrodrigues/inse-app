@@ -5,9 +5,8 @@ import { IconSearch, IconX } from "@tabler/icons-react";
 import { ItemContext } from "@contexts/Item";
 
 export function Search() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [isCleanAllowed, setCleanAllowed] = useState(false);
-  const { handleSearchData, handleLoadData } = useContext(ItemContext);
+  const { searchTerm, setSearchTerm, handleSearchData, handleLoadData } = useContext(ItemContext);
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
