@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { Flex, TextInput, ThemeIcon } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { Flex } from "@mantine/core";
 
 import logo from "@assets/logo-full.svg";
+import { Search } from "@components/Search";
 
 export function Menu() {
   return (
@@ -16,19 +16,7 @@ export function Menu() {
           />
         </Link>
 
-        <TextInput
-          placeholder="Procure por nome da Escola, UF ou Município"
-          leftSection={
-            <ThemeIcon
-              variant="light"
-              className="bg-transparent text-accent-400">
-              <IconSearch size="24" />
-            </ThemeIcon>
-          }
-          onChange={(event) => console.log(event.target.value)}
-          size="lg"
-          className="w-full max-w-lg"
-        />
+        <Search />
       </Flex>
     </Flex>
   );
