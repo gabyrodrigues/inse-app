@@ -1,4 +1,3 @@
-![Inse App](https://raw.githubusercontent.com/gabyrodrigues/inse-app/main/frontend/public/inse.svg)
 # 📝 Projeto Inse App
 
 Este projeto tem a finalidade visualizar e filtrar os dados do [Nível Socioeconômico (Inse)](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/nivel-socioeconomico) das Escolas de 2021 extraídos das fontes oficiais e públicas do Inep. A partir da aplicação desenvolvida em React JS é possível visualizar todas a lista de dados do Inse 2021, visualizar os detalhes de uma única escola, além de poder realizar uma busca e filtrar os principais dados da listagem.
@@ -22,8 +21,9 @@ Antes de configurar o projeto, é necessário que as variáveis de ambiente nos 
 #### 💠 Variáveis de Ambiente
 
 ```bash
-DATABASE_URL="" # Variável local para configuração de conexão do banco de dados MySQL para o Prisma. Nela é preciso inserir o host, porta, nome do banco de dados, usuário do banco de dados e senha. Para mais informações de como criar a variável verifique as docs do [Prisma](https://www.prisma.io/docs/orm/overview/databases/mysql)
+DATABASE_URL="" # Variável local para configuração de conexão do banco de dados MySQL para o Prisma.
 ```
+Nela é preciso inserir o host, porta, nome do banco de dados, usuário do banco de dados e senha. Para mais informações de como criar a variável verifique as docs do [Prisma](https://www.prisma.io/docs/orm/overview/databases/mysql). No exemplo, criei um banco de dados e usuário com mesmo nome: `inse_app`.
 
 ## 💻 Inicializando o projeto
 Para instalar o projeto localmente, além das configurações citadas acima é necessário seguir o passo a passo para configurar tanto o backend quanto o frontend:
@@ -54,13 +54,21 @@ npx prisma migrate dev
 npx prisma generate
 ```
 
-4. Suba o servidor local com:
+4. Popule o banco de dados com o arquivo Excel referente Inse de 2021:
+
+```bash
+npm run populate:db INSE_2021_escolas_1.xlsx
+```
+
+É importante notar que devido a grande quantidade de dados, o script pode demorar alguns minutos para finalizar a sua execução.
+
+5. Suba o servidor local com:
 
 ```bash
 npm run start:dev
 ```
 
-5. (Opcional) Verifique o banco de dados criado no Prisma Studio:
+6. (Opcional) Verifique o banco de dados criado no Prisma Studio:
 
 ```bash
 npx prisma studio
@@ -100,3 +108,4 @@ Acesse [http://localhost:5173](http://localhost:5173) no navegador para visualiz
 - _(Pro)_ A utilização do Prisma como ORM no Node JS foi importante para o gerenciamento do banco de dados e criação de queries, trazendo uma rapidez maior para o desenvolvimento e mantendo uma organização básica.
 - _(Melhoria)_ Uma organização melhor da arquitetura do projeto backend.
 - _(Melhoria)_ Mais opções de filtragem dos dados.
+- _(Melhoria)_ Aproveitar a rota de visualização única de uma escola e criar uma nova página para melhorar a visualização dos dados da escola, ao invés de ser apenas um modal.
