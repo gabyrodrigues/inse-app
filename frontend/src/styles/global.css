@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital@1&family=Inter:wght@300;400;500;600;700&display=swap");
+@layer {
+  @tailwind base;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: #030517;
+  background-color: #f2f2f2;
+}

@@ -120,11 +120,9 @@ const listInseData = async function (req: Request, res: Response) {
   const totalOfPages = Math.ceil(total / take);
 
   return res.status(200).json({
-    data: {
-      total,
-      totalOfPages,
-      result: data
-    }
+    total,
+    totalOfPages,
+    result: data
   });
 };
 
@@ -181,11 +179,9 @@ const searchData = async function (req: Request, res: Response) {
     const totalOfPages = Math.ceil(total / take);
 
     return res.status(200).json({
-      data: {
-        total,
-        totalOfPages,
-        result: data
-      }
+      total,
+      totalOfPages,
+      result: data
     });
   } catch (error) {
     console.error(error);
@@ -248,11 +244,9 @@ const filterData = async function (req: Request, res: Response) {
     const totalOfPages = Math.ceil(total / take);
 
     return res.status(200).json({
-      data: {
-        total,
-        totalOfPages,
-        result: data
-      }
+      total,
+      totalOfPages,
+      result: data
     });
   } catch (error) {
     console.error(error);
