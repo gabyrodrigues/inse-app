@@ -1,19 +1,8 @@
 import { Request, Response } from "express";
-import multer from "multer";
-import xlsx from "xlsx";
-import fs from "fs";
-import fileUpload from "express-fileupload";
+
 import prismaClient from "../prisma";
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-const uploadOpts = {
-  useTempFiles: true,
-  tempFileDir: "/tmp/"
-};
-
-interface InseDataItem {
+export interface InseDataItem {
   nu_ano_saeb: number;
   co_uf: number;
   sg_uf: string;
@@ -37,66 +26,6 @@ interface InseDataItem {
   pc_nivel_7: number;
   pc_nivel_8: number;
 }
-
-const transformExcelData = (excelData: any): InseDataItem => {
-  const transformedData: InseDataItem = {
-    nu_ano_saeb: excelData?.NU_ANO_SAEB,
-    co_uf: excelData?.CO_UF,
-    sg_uf: excelData?.SG_UF,
-    no_uf: excelData?.NO_UF,
-    co_municipio: String(excelData?.CO_MUNICIPIO),
-    no_municipio: excelData?.NO_MUNICIPIO,
-    id_escola: String(excelData?.ID_ESCOLA),
-    no_escola: excelData?.NO_ESCOLA,
-    tp_tipo_rede: excelData?.TP_TIPO_REDE,
-    tp_localizacao: excelData?.TP_LOCALIZACAO,
-    tp_capital: excelData?.TP_CAPITAL,
-    qtd_alunos_inse: excelData?.QTD_ALUNOS_INSE,
-    media_inse: excelData?.MEDIA_INSE,
-    inse_classificacao: excelData?.INSE_CLASSIFICACAO,
-    pc_nivel_1: excelData?.PC_NIVEL_1,
-    pc_nivel_2: excelData?.PC_NIVEL_2,
-    pc_nivel_3: excelData?.PC_NIVEL_3,
-    pc_nivel_4: excelData?.PC_NIVEL_4,
-    pc_nivel_5: excelData?.PC_NIVEL_5,
-    pc_nivel_6: excelData?.PC_NIVEL_6,
-    pc_nivel_7: excelData?.PC_NIVEL_7,
-    pc_nivel_8: excelData?.PC_NIVEL_8
-  };
-
-  return transformedData;
-};
-
-const excelData = async function (req: Request, res: Response) {
-  try {
-    const files = req.files as fileUpload.FileArray;
-    const excel = files.excel as fileUpload.UploadedFile;
-
-    if (excel.mimetype !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-      console.error("File is invalid.");
-      fs.unlinkSync(excel.tempFilePath);
-      return res.status(400).json({ error: "File is invalid." });
-    }
-
-    const workbook = xlsx.readFile(excel.tempFilePath);
-    const sheetName = workbook.SheetNames[0];
-
-    const rawData: Record<string, string>[] = xlsx.utils.sheet_to_json(
-      workbook.Sheets[sheetName]
-    ) as any[];
-    const data = rawData.map(transformExcelData);
-
-    for (const item of data) {
-      await prismaClient.inseData.create({ data: item });
-    }
-
-    fs.unlinkSync(excel.tempFilePath);
-    res.status(200).json({ message: "Data inserted successfully!" });
-  } catch (err) {
-    console.error("Error inserting data:", err);
-    res.status(500).json({ error: "Error inserting data into the database." });
-  }
-};
 
 const listInseData = async function (req: Request, res: Response) {
   const page = req.query.page ? +req.query.page : 1;
@@ -138,7 +67,7 @@ const findSchoolInseData = async function (req: Request, res: Response) {
     return res.status(200).json({ data });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Error finding data" });
+    return res.status(500).json({ error: "Erro ao buscar dados." });
   }
 };
 
@@ -184,7 +113,7 @@ const searchData = async function (req: Request, res: Response) {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Error searching data" });
+    return res.status(500).json({ error: "Erro ao realizar busca." });
   }
 };
 
@@ -254,16 +183,13 @@ const filterData = async function (req: Request, res: Response) {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Error filtering data" });
+    return res.status(500).json({ error: "Erro ao filtrar dados." });
   }
 };
 
 export default {
-  excelData,
   listInseData,
   findSchoolInseData,
   searchData,
-  filterData,
-  upload,
-  uploadOpts
+  filterData
 };
