@@ -47,6 +47,18 @@ export function DrawColumns(props: RowsProps): DataTableColumn<InseDataItem>[] {
       }
     },
     {
+      accessor: "no_municipio",
+      title: "Município",
+      titleStyle: {
+        color: theme.colors.gray[9],
+        fontWeight: 500
+      },
+      textAlign: "left",
+      render: ({ no_municipio }) => {
+        return <Text>{no_municipio}</Text>;
+      }
+    },
+    {
       accessor: "no_escola",
       title: "Nome da Escola",
       titleStyle: {
