@@ -107,8 +107,8 @@ Acesse [http://localhost:5173](http://localhost:5173) no navegador para visualiz
  
 ## 💡 Aprendizados
 
-- _(Pro)_ A utilização de uma biblioteca de componentes principais reutilizáveis mas ainda customizáveis já prontos do [Mantine](https://mantine.dev/) e a utilização de um biblioteca de classes para estilização ([Tailwind CSS](https://tailwindcss.com/)) funcionou positivamente para acelerar o desenvolvimento e conseguir adaptar uma identidade visual básica.
-- _(Pro)_ A utilização do Prisma como ORM no Node JS para gerenciar o PostgreSQL foi importante para o gerenciamento do banco de dados e criação de queries, trazendo uma rapidez maior para o desenvolvimento e mantendo uma organização básica.
-- _(Melhoria)_ Uma organização melhor da arquitetura do projeto backend.
-- _(Melhoria)_ Mais opções de filtragem dos dados.
-- _(Melhoria)_ Aproveitar a rota de visualização única de uma escola e criar uma nova página para melhorar a visualização dos dados da escola, ao invés de ser apenas um modal.
+In general, the project brought a lot of lessons, especially in terms of creating components and managing all the CRUDs in cases where one piece of information depends on the existence of another. Although I believe the result has been satisfactory, it is still possible to make several improvements, such as:
+
+- Improving dependencies between CRUD functions;
+- Optimized rendering of components;
+- Refactoring the data creation functions;
